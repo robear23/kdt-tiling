@@ -1,0 +1,30 @@
+Business Overview
+Business Name: KDT Tiling Swansea
+
+Page Type / Categories: Tiling service, Home improvement
+
+Contact Information
+Phone Number: +44 7713 246545
+
+Email Address: KDTTILINGSWANSEA@outlook.com
+
+Instagram: @kdttilingswansea (206 followers)
+
+Service Details & Location
+Base Location: Pontardawe
+
+Service Area: Covering all of S Wales (South Wales)
+
+Core Offerings:
+
+Professional tiling services (ALL aspects of wall and floor tiling)
+
+Plumbing related services
+
+Business Guarantees:
+
+All work is fully guaranteed
+
+Fully insured
+
+Free, no-obligation competitive quotes available via direct message (DM)
