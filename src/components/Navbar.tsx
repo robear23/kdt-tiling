@@ -10,6 +10,7 @@ const navLinks = [
   { name: "Services", href: "/#services" },
   { name: "Gallery", href: "/#gallery" },
   { name: "Why Choose Us", href: "/#features" },
+  { name: "Reviews", href: "/#reviews" },
 ];
 
 export default function Navbar() {

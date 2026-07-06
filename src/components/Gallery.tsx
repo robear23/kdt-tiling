@@ -20,7 +20,7 @@ const spanPatterns = [
 
 export default function Gallery() {
   const categories = Object.keys(portfolioCategories) as Category[];
-  const [activeCategory, setActiveCategory] = useState<Category>("Bathroom");
+  const [activeCategory, setActiveCategory] = useState<Category>("Kitchen");
 
   return (
     <section id="gallery" className="py-24 bg-[#050505]">

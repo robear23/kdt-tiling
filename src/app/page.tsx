@@ -4,6 +4,7 @@ import Services from "@/components/Services";
 import Gallery from "@/components/Gallery";
 import Features from "@/components/Features";
 import Contact from "@/components/Contact";
+import Reviews from "@/components/Reviews";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
       <Services />
       <Gallery />
       <Features />
+      <Reviews />
       <Contact />
       <Footer />
     </main>

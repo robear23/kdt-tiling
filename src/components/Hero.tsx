@@ -13,7 +13,7 @@ export default function Hero() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-90 mix-blend-luminosity"
           style={{
             backgroundImage:
-              "url('/images/kitchen_28.jpg')",
+              "url('/images/hero_cropped.png')",
           }}
         />
         {/* Gradient overlays to blend into matte black background */}
