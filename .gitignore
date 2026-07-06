@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# screenshots and unused assets
+location page example - Idaho Falls.png
+screenshot.png
+unused photos/
+

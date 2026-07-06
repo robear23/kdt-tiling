@@ -10,15 +10,15 @@ export default function Hero() {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80 mix-blend-luminosity"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-90 mix-blend-luminosity"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=2069&auto=format&fit=crop')", // Marble/geometric tile style placeholder
+              "url('/images/kitchen_28.jpg')",
           }}
         />
         {/* Gradient overlays to blend into matte black background */}
-        <div className="absolute inset-0 bg-gradient-to-t from-matte-black via-matte-black/25 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-matte-black via-matte-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-matte-black via-matte-black/15 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-matte-black via-matte-black/30 to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-start justify-center">
@@ -27,10 +27,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="inline-flex items-center space-x-2 glass-panel px-4 py-2 rounded-full mb-8"
+          className="inline-flex items-center sm:space-x-2 glass-panel px-4 py-2 rounded-full mb-8 max-w-full"
         >
-          <CheckCircle className="text-electric-cyan w-4 h-4" />
-          <span className="text-sm font-medium text-gray-200 tracking-wide">
+          <CheckCircle className="text-electric-cyan w-4 h-4 flex-shrink-0 mr-2 sm:mr-0" />
+          <span className="text-xs md:text-sm font-medium text-gray-200 tracking-wide text-center">
             Based in Pontardawe | Fully Insured & Guaranteed
           </span>
         </motion.div>
@@ -56,9 +56,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
           className="mt-6 max-w-2xl text-base md:text-lg text-gray-400 font-sans leading-relaxed"
         >
-          Professional precision in all aspects of tiling and wetrooms. Transform
-          your spaces with premium craftsmanship that stands the test of time.
-          Fully guaranteed and insured.
+          Professional precision in all aspects of floor & wall tiling, domestic plumbing, wall & ceiling panelling, and small bricklaying jobs. Transform your spaces with premium craftsmanship across South Wales.
         </motion.p>
 
         {/* CTAs */}
@@ -70,14 +68,14 @@ export default function Hero() {
         >
           <Link
             href="#contact"
-            className="group flex items-center justify-center space-x-2 bg-electric-cyan text-black px-8 py-4 rounded font-bold hover:bg-cyan-300 transition-all duration-300"
+            className="group w-full sm:w-auto flex items-center justify-center space-x-2 bg-electric-cyan text-black px-8 py-4 rounded font-bold hover:bg-cyan-300 transition-all duration-300"
           >
             <span>Request a Free Quote</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link
             href="#gallery"
-            className="flex items-center justify-center px-8 py-4 rounded font-semibold text-white border border-white/20 hover:bg-white/5 transition-all duration-300"
+            className="w-full sm:w-auto flex items-center justify-center px-8 py-4 rounded font-semibold text-white border border-white/20 hover:bg-white/5 transition-all duration-300"
           >
             View Our Work
           </Link>

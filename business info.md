@@ -17,9 +17,10 @@ Service Area: Covering all of S Wales (South Wales)
 
 Core Offerings:
 
-Professional tiling services (ALL aspects of wall and floor tiling)
-
-Plumbing related services
+- Professional tiling services (ALL aspects of wall and floor tiling)
+- Domestic plumbing services
+- Wall and ceiling panelling
+- Small bricklaying jobs
 
 Business Guarantees:
 

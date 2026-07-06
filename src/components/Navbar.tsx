@@ -1,16 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { locations } from "@/lib/locations";
 
 const navLinks = [
-  { name: "Services", href: "#services" },
-  { name: "Gallery", href: "#gallery" },
-  { name: "Why Choose Us", href: "#features" },
-  { name: "Contact", href: "#contact" },
+  { name: "Services", href: "/#services" },
+  { name: "Gallery", href: "/#gallery" },
+  { name: "Why Choose Us", href: "/#features" },
 ];
 
 export default function Navbar() {
@@ -49,8 +48,37 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
+
+            {/* Locations Dropdown */}
+            <div className="relative group">
+              <button className="flex items-center space-x-1 text-gray-200 hover:text-white transition-colors duration-200 text-sm tracking-wide font-medium py-4">
+                <span>Locations</span>
+                <ChevronDown size={16} className="transition-transform duration-200 group-hover:rotate-180" />
+              </button>
+              <div className="absolute top-full right-0 w-48 bg-black/95 backdrop-blur-xl border border-white/10 rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 overflow-hidden z-50">
+                <div className="py-2">
+                  {locations.map((loc) => (
+                    <Link
+                      key={loc.slug}
+                      href={`/locations/${loc.slug}`}
+                      className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
+                    >
+                      {loc.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             <Link
-              href="#contact"
+              href="/#contact"
+              className="text-gray-200 hover:text-white transition-colors duration-200 text-sm tracking-wide font-medium"
+            >
+              Contact
+            </Link>
+
+            <Link
+              href="/#contact"
               className="bg-electric-cyan text-black px-6 py-2.5 rounded hover:bg-cyan-300 transition-colors duration-300 font-semibold text-sm"
             >
               Get a Free Quote
@@ -76,7 +104,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-t border-white/10"
+            className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-t border-white/10 max-h-[calc(100vh-6rem)] overflow-y-auto"
           >
             <div className="px-4 pt-4 pb-6 space-y-4">
               {navLinks.map((link) => (
@@ -90,12 +118,35 @@ export default function Navbar() {
                 </Link>
               ))}
               <Link
-                href="#contact"
+                href="/#contact"
+                onClick={() => setIsOpen(false)}
+                className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-md"
+              >
+                Contact
+              </Link>
+              <Link
+                href="/#contact"
                 onClick={() => setIsOpen(false)}
                 className="block text-center mt-6 w-full bg-electric-cyan text-black px-6 py-3 rounded hover:bg-cyan-300 font-bold"
               >
                 Get a Free Quote
               </Link>
+
+              <div className="px-3 pt-2 pb-4 border-t border-white/10">
+                <div className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-3">Locations</div>
+                <div className="grid grid-cols-2 gap-y-3 gap-x-2">
+                  {locations.map((loc) => (
+                    <Link
+                      key={loc.slug}
+                      href={`/locations/${loc.slug}`}
+                      onClick={() => setIsOpen(false)}
+                      className="block text-sm font-medium text-gray-300 hover:text-white"
+                    >
+                      {loc.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             </div>
           </motion.div>
         )}

@@ -22,6 +22,23 @@ const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
 export default function Contact() {
   return (
     <section id="contact" className="py-24 bg-[#0a0a0b] relative overflow-hidden">
@@ -38,7 +55,7 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6">
-              Let's Discuss Your <span className="text-gradient-cyan">Project</span>
+              Let&apos;s Discuss Your <span className="text-gradient-cyan">Project</span>
             </h2>
             <p className="text-gray-400 font-sans text-lg mb-10 max-w-md leading-relaxed">
               Ready to transform your space? Contact us today for a free, no-obligation quote. Our team is ready to bring your vision to life.
@@ -74,28 +91,52 @@ export default function Contact() {
               </a>
             </div>
 
-            {/* Social Card */}
-            <a
-              href="https://instagram.com/kdttilingswansea"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block glass-panel p-6 rounded-2xl border-electric-cyan/20 hover:border-electric-cyan/50 hover:bg-white/5 transition-all duration-300 group"
-            >
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center flex-shrink-0">
-                  <InstagramIcon className="w-6 h-6 text-white" />
+            {/* Social Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <a
+                href="https://instagram.com/kdttilingswansea"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block glass-panel p-6 rounded-2xl border-electric-cyan/20 hover:border-electric-cyan/50 hover:bg-white/5 transition-all duration-300 group"
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center flex-shrink-0">
+                    <InstagramIcon className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-base font-bold text-white mb-1.5 flex items-center flex-wrap gap-2">
+                      <span className="truncate">@kdttilingswansea</span>
+                      <span className="text-[10px] bg-electric-cyan/20 text-electric-cyan px-2 py-0.5 rounded-full whitespace-nowrap">Follow</span>
+                    </h4>
+                    <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors">
+                      Join our 200+ followers to see daily project updates!
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-lg font-bold text-white mb-2 flex items-center">
-                    @kdttilingswansea
-                    <span className="ml-2 text-xs bg-electric-cyan/20 text-electric-cyan px-2 py-1 rounded-full">Follow us</span>
-                  </h4>
-                  <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors">
-                    Join our 200+ followers to see daily project updates! Slide into our DMs for an instant response.
-                  </p>
+              </a>
+
+              <a
+                href="https://www.facebook.com/profile.php?id=61560688422009#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block glass-panel p-6 rounded-2xl border-electric-cyan/20 hover:border-electric-cyan/50 hover:bg-white/5 transition-all duration-300 group"
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 rounded-full bg-[#1877F2] flex items-center justify-center flex-shrink-0">
+                    <FacebookIcon className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-base font-bold text-white mb-1.5 flex items-center flex-wrap gap-2">
+                      <span className="truncate">KDT Tiling</span>
+                      <span className="text-[10px] bg-electric-cyan/20 text-electric-cyan px-2 py-0.5 rounded-full whitespace-nowrap">Like</span>
+                    </h4>
+                    <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors">
+                      Check reviews, project galleries, and connect with us!
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </div>
           </motion.div>
 
           {/* Right Column: Contact Form */}
