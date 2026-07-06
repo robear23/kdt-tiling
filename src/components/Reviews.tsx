@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 
 const allReviews = [
@@ -25,31 +25,50 @@ const allReviews = [
 
 export default function Reviews() {
   const [reviews, setReviews] = useState<typeof allReviews>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0); // This now represents the page index
+  const [itemsPerPage, setItemsPerPage] = useState(3);
 
   useEffect(() => {
-    // Shuffle and pick 6 random reviews on mount to avoid hydration mismatch
+    // Shuffle and pick 15 random reviews on mount
     const shuffled = [...allReviews].sort(() => 0.5 - Math.random());
-    setReviews(shuffled.slice(0, 6));
+    setReviews(shuffled.slice(0, 15));
   }, []);
 
   useEffect(() => {
-    if (reviews.length === 0) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % reviews.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [reviews, currentIndex]);
+    const handleResize = () => {
+      if (window.innerWidth < 768) setItemsPerPage(1);
+      else if (window.innerWidth < 1024) setItemsPerPage(2);
+      else setItemsPerPage(3);
+    };
+    
+    handleResize(); // Set initial value
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const totalPages = Math.max(1, Math.ceil(reviews.length / itemsPerPage));
+
+  // Reset to first page if resize causes current index to be out of bounds
+  useEffect(() => {
+    if (currentIndex >= totalPages) setCurrentIndex(0);
+  }, [itemsPerPage, currentIndex, totalPages]);
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % reviews.length);
+    setCurrentIndex((prev) => (prev + 1) % totalPages);
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+    setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
   };
 
   if (reviews.length === 0) return null;
+
+  const getVisibleReviews = () => {
+    const startIndex = currentIndex * itemsPerPage;
+    return Array.from({ length: itemsPerPage }).map((_, idx) => 
+      reviews[(startIndex + idx) % reviews.length]
+    );
+  };
 
   return (
     <section id="reviews" className="py-24 bg-gradient-to-b from-black to-gray-900 relative overflow-hidden">
@@ -81,11 +100,11 @@ export default function Reviews() {
           </motion.p>
         </div>
 
-        <div className="relative max-w-4xl mx-auto px-6 sm:px-16">
+        <div className="relative max-w-6xl mx-auto px-6 sm:px-16 lg:px-20">
           <button 
             onClick={handlePrev}
             className="absolute left-0 md:left-2 top-1/2 -translate-y-1/2 z-20 p-2 md:p-3 rounded-full bg-black/50 hover:bg-electric-cyan hover:text-black text-white border border-white/20 transition-all duration-300 backdrop-blur-md"
-            aria-label="Previous review"
+            aria-label="Previous page"
           >
             <ChevronLeft size={24} className="w-5 h-5 md:w-6 md:h-6" />
           </button>
@@ -93,54 +112,61 @@ export default function Reviews() {
           <button 
             onClick={handleNext}
             className="absolute right-0 md:right-2 top-1/2 -translate-y-1/2 z-20 p-2 md:p-3 rounded-full bg-black/50 hover:bg-electric-cyan hover:text-black text-white border border-white/20 transition-all duration-300 backdrop-blur-md"
-            aria-label="Next review"
+            aria-label="Next page"
           >
             <ChevronRight size={24} className="w-5 h-5 md:w-6 md:h-6" />
           </button>
 
-          <div className="flex justify-center items-center min-h-[300px]">
+          <div className="flex justify-center items-stretch min-h-[300px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
-                initial={{ opacity: 0, x: 50, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -50, scale: 0.95 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12 w-full shadow-2xl relative"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full"
               >
-                <Quote className="absolute top-6 left-6 md:top-8 md:left-8 w-12 h-12 text-electric-cyan/20" />
-                <div className="relative z-10 text-center">
-                  <p className="text-xl md:text-2xl text-gray-200 font-medium italic mb-8 leading-relaxed">
-                    "{reviews[currentIndex].text}"
-                  </p>
-                  <div className="flex items-center justify-center space-x-4">
-                    <div className="w-12 h-12 bg-electric-cyan/20 rounded-full flex items-center justify-center">
-                      <span className="text-electric-cyan font-bold text-xl">
-                        {reviews[currentIndex].name.charAt(0)}
-                      </span>
-                    </div>
-                    <div className="text-left">
-                      <h4 className="text-white font-bold text-lg">{reviews[currentIndex].name}</h4>
-                      <div className="flex text-electric-cyan text-sm">
-                        {"★".repeat(5)}
+                {getVisibleReviews().map((review, idx) => (
+                  <div 
+                    key={`${currentIndex}-${idx}`} 
+                    className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl relative flex flex-col h-full"
+                  >
+                    <Quote className="absolute top-4 left-4 w-8 h-8 text-electric-cyan/20" />
+                    <div className="relative z-10 flex-1 flex flex-col pt-4">
+                      <p className="text-sm md:text-base text-gray-200 font-medium italic mb-6 leading-relaxed flex-1">
+                        "{review.text}"
+                      </p>
+                      <div className="flex items-center space-x-4 mt-auto">
+                        <div className="w-10 h-10 bg-electric-cyan/20 rounded-full flex items-center justify-center shrink-0">
+                          <span className="text-electric-cyan font-bold">
+                            {review.name.charAt(0)}
+                          </span>
+                        </div>
+                        <div className="text-left">
+                          <h4 className="text-white font-bold">{review.name}</h4>
+                          <div className="flex text-electric-cyan text-xs">
+                            {"★".repeat(5)}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                ))}
               </motion.div>
             </AnimatePresence>
           </div>
           
           {/* Pagination dots */}
-          <div className="flex justify-center space-x-3 mt-8">
-            {reviews.map((_, idx) => (
+          <div className="flex justify-center flex-wrap gap-2 mt-8 max-w-full">
+            {Array.from({ length: totalPages }).map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  currentIndex === idx ? "bg-electric-cyan w-8" : "bg-white/20 hover:bg-white/40"
+                className={`h-3 rounded-full transition-all duration-300 ${
+                  currentIndex === idx ? "bg-electric-cyan w-8" : "bg-white/20 w-3 hover:bg-white/40"
                 }`}
-                aria-label={`Go to review ${idx + 1}`}
+                aria-label={`Go to page ${idx + 1}`}
               />
             ))}
           </div>

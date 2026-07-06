@@ -71,13 +71,13 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* Grid Container */}
         <div className="min-h-[500px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCategory}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
               className="grid grid-cols-1 md:grid-cols-3 auto-rows-[200px] md:auto-rows-[250px] gap-4 md:gap-6"
@@ -86,8 +86,9 @@ export default function Gallery() {
                 <motion.div
                   key={`${activeCategory}-${index}`}
                   initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
                   className={`relative overflow-hidden rounded-xl group ${spanPatterns[index % spanPatterns.length]}`}
                 >
                   {/* Overlay */}
