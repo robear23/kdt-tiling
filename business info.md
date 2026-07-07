@@ -6,7 +6,7 @@ Page Type / Categories: Tiling service, Home improvement
 Contact Information
 Phone Number: +44 7713 246545
 
-Email Address: KDTTILINGSWANSEA@outlook.com
+Email Address: info@kdttiling.co.uk
 
 Instagram: @kdttilingswansea (206 followers)
 

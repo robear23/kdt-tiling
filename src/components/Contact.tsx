@@ -1,7 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, Send } from "lucide-react";
+import { siteConfig } from "@/lib/site-config";
+import { submitContactForm } from "@/app/actions";
 
 const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -40,6 +43,37 @@ const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function Contact() {
+  const [pending, setPending] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setPending(true);
+    setError(null);
+    setWarning(null);
+    setSuccess(false);
+
+    const formData = new FormData(e.currentTarget);
+    try {
+      const res = await submitContactForm(formData);
+      if (res.success) {
+        setSuccess(true);
+        if (res.warning) {
+          setWarning(res.warning);
+        }
+        e.currentTarget.reset();
+      } else {
+        setError(res.error || "Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setPending(false);
+    }
+  };
+
   return (
     <section id="contact" className="py-24 bg-[#0a0a0b] relative overflow-hidden">
       {/* Background Glow */}
@@ -76,7 +110,7 @@ export default function Contact() {
               </a>
 
               <a
-                href="mailto:KDTTILINGSWANSEA@outlook.com"
+                href={`mailto:${siteConfig.contact.email}`}
                 className="group flex items-center space-x-4 p-4 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-300"
               >
                 <div className="w-12 h-12 rounded-full bg-electric-cyan/10 flex items-center justify-center group-hover:bg-electric-cyan transition-colors duration-300">
@@ -85,7 +119,7 @@ export default function Contact() {
                 <div>
                   <p className="text-sm text-gray-400 font-medium mb-1">Email Us</p>
                   <p className="text-lg md:text-xl text-white font-semibold tracking-wide break-all">
-                    KDTTILINGSWANSEA@outlook.com
+                    {siteConfig.contact.email}
                   </p>
                 </div>
               </a>
@@ -150,12 +184,28 @@ export default function Contact() {
             <h3 className="text-2xl font-serif font-semibold text-white mb-8">
               Request a Callback
             </h3>
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+
+            {success && (
+              <div className="p-4 mb-6 text-sm text-black bg-electric-cyan rounded-xl font-sans font-medium">
+                <p>✓ Your request has been sent successfully!</p>
+                {warning && <p className="mt-2 text-xs opacity-90">{warning}</p>}
+                {!warning && <p className="mt-1 text-xs opacity-90">We will get back to you shortly and a confirmation email has been sent.</p>}
+              </div>
+            )}
+
+            {error && (
+              <div className="p-4 mb-6 text-sm text-white bg-red-500/20 border border-red-500/30 rounded-xl font-sans font-medium">
+                <p>✗ {error}</p>
+              </div>
+            )}
+
+            <form className="space-y-6" onSubmit={handleSubmit}>
               {/* Floating Label Input: Name */}
               <div className="relative">
                 <input
                   type="text"
                   id="name"
+                  name="name"
                   className="block px-0 py-4 w-full text-base text-white bg-transparent border-0 border-b-2 border-white/20 appearance-none focus:outline-none focus:ring-0 focus:border-electric-cyan peer"
                   placeholder=" "
                   required
@@ -173,6 +223,7 @@ export default function Contact() {
                 <input
                   type="tel"
                   id="phone"
+                  name="phone"
                   className="block px-0 py-4 w-full text-base text-white bg-transparent border-0 border-b-2 border-white/20 appearance-none focus:outline-none focus:ring-0 focus:border-electric-cyan peer"
                   placeholder=" "
                   required
@@ -190,6 +241,7 @@ export default function Contact() {
                 <input
                   type="email"
                   id="email"
+                  name="email"
                   className="block px-0 py-4 w-full text-base text-white bg-transparent border-0 border-b-2 border-white/20 appearance-none focus:outline-none focus:ring-0 focus:border-electric-cyan peer"
                   placeholder=" "
                 />
@@ -205,6 +257,7 @@ export default function Contact() {
               <div className="relative">
                 <textarea
                   id="details"
+                  name="details"
                   rows={4}
                   className="block px-0 py-4 w-full text-base text-white bg-transparent border-0 border-b-2 border-white/20 appearance-none focus:outline-none focus:ring-0 focus:border-electric-cyan peer resize-none"
                   placeholder=" "
@@ -220,10 +273,11 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className="group w-full flex items-center justify-center space-x-2 bg-electric-cyan text-black font-bold py-4 rounded hover:bg-cyan-300 transition-all duration-300 mt-4"
+                disabled={pending}
+                className="group w-full flex items-center justify-center space-x-2 bg-electric-cyan disabled:bg-cyan-950 disabled:text-cyan-600 disabled:cursor-not-allowed text-black font-bold py-4 rounded hover:bg-cyan-300 transition-all duration-300 mt-4"
               >
-                <span>Send Request</span>
-                <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                <span>{pending ? "Sending Request..." : "Send Request"}</span>
+                {!pending && <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
               </button>
             </form>
           </motion.div>

@@ -15,7 +15,7 @@ export const siteConfig = {
     phoneDisplay: "+44 7713 246545",
     phoneE164: "+447713246545",
     phoneTelHref: "tel:+447713246545",
-    email: "KDTTILINGSWANSEA@outlook.com",
+    email: "info@kdttiling.co.uk",
   },
 
   social: {
