@@ -42,6 +42,19 @@ const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.113-5.136 4.113-3.41 0-6.177-2.767-6.177-6.177s2.767-6.177 6.177-6.177c1.5 0 2.87.535 3.94 1.564l3.129-3.129C19.124 2.128 15.918 1 12.24 1 6.033 1 1 6.033 1 12.24s5.033 11.24 11.24 11.24c6.478 0 10.793-4.537 10.793-11.002 0-.745-.067-1.463-.193-2.193H12.24z" />
+  </svg>
+);
+
 export default function Contact() {
   const [pending, setPending] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -55,7 +68,8 @@ export default function Contact() {
     setWarning(null);
     setSuccess(false);
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     try {
       const res = await submitContactForm(formData);
       if (res.success) {
@@ -63,11 +77,12 @@ export default function Contact() {
         if (res.warning) {
           setWarning(res.warning);
         }
-        e.currentTarget.reset();
+        form.reset();
       } else {
         setError(res.error || "Something went wrong. Please try again.");
       }
     } catch (err) {
+      console.error("Client handleSubmit error:", err);
       setError("An unexpected error occurred. Please try again.");
     } finally {
       setPending(false);
@@ -88,88 +103,77 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white text-center">
               Let&apos;s Discuss Your <span className="text-gradient-cyan">Project</span>
             </h2>
-            <p className="text-gray-400 font-sans text-lg mb-10 max-w-md leading-relaxed">
+            <p className="mt-8 text-gray-400 font-sans text-lg mb-16 max-w-md mx-auto text-center leading-relaxed">
               Ready to transform your space? Contact us today for a free, no-obligation quote. Our team is ready to bring your vision to life.
             </p>
-
-            <div className="space-y-8 mb-12">
+            <div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
               <a
-                href="tel:+447713246545"
-                className="group flex items-center space-x-4 p-4 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-300"
+                href={siteConfig.contact.phoneTelHref}
+                className="group flex flex-col items-center text-center p-6 glass-panel rounded-2xl border-electric-cyan/10 hover:border-electric-cyan/40 hover:bg-white/5 transition-all duration-300"
               >
-                <div className="w-12 h-12 rounded-full bg-electric-cyan/10 flex items-center justify-center group-hover:bg-electric-cyan transition-colors duration-300">
+                <div className="w-12 h-12 rounded-full bg-electric-cyan/10 flex items-center justify-center group-hover:bg-electric-cyan transition-colors duration-300 mb-4">
                   <Phone className="w-6 h-6 text-electric-cyan group-hover:text-black" />
                 </div>
-                <div>
-                  <p className="text-sm text-gray-400 font-medium mb-1">Call Us Directly</p>
-                  <p className="text-xl text-white font-semibold tracking-wide">+44 7713 246545</p>
-                </div>
+                <p className="text-sm text-gray-400 font-medium mb-1">Call Us</p>
+                <p className="text-white font-semibold tracking-wide">{siteConfig.contact.phoneDisplay}</p>
               </a>
 
               <a
                 href={`mailto:${siteConfig.contact.email}`}
-                className="group flex items-center space-x-4 p-4 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-300"
+                className="group flex flex-col items-center text-center p-6 glass-panel rounded-2xl border-electric-cyan/10 hover:border-electric-cyan/40 hover:bg-white/5 transition-all duration-300"
               >
-                <div className="w-12 h-12 rounded-full bg-electric-cyan/10 flex items-center justify-center group-hover:bg-electric-cyan transition-colors duration-300">
+                <div className="w-12 h-12 rounded-full bg-electric-cyan/10 flex items-center justify-center group-hover:bg-electric-cyan transition-colors duration-300 mb-4">
                   <Mail className="w-6 h-6 text-electric-cyan group-hover:text-black" />
                 </div>
-                <div>
-                  <p className="text-sm text-gray-400 font-medium mb-1">Email Us</p>
-                  <p className="text-lg md:text-xl text-white font-semibold tracking-wide break-all">
-                    {siteConfig.contact.email}
-                  </p>
-                </div>
+                <p className="text-sm text-gray-400 font-medium mb-1">Email Us</p>
+                <p className="text-white font-semibold tracking-wide break-all">
+                  {siteConfig.contact.email}
+                </p>
               </a>
             </div>
 
             {/* Social Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <a
-                href="https://instagram.com/kdttilingswansea"
+                href={siteConfig.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block glass-panel p-6 rounded-2xl border-electric-cyan/20 hover:border-electric-cyan/50 hover:bg-white/5 transition-all duration-300 group"
+                className="group flex flex-col items-center text-center p-5 glass-panel rounded-2xl border-electric-cyan/10 hover:border-electric-cyan/40 hover:bg-white/5 transition-all duration-300"
               >
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center flex-shrink-0">
-                    <InstagramIcon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h4 className="text-base font-bold text-white mb-1.5 flex items-center flex-wrap gap-2">
-                      <span className="truncate">@kdttilingswansea</span>
-                      <span className="text-[10px] bg-electric-cyan/20 text-electric-cyan px-2 py-0.5 rounded-full whitespace-nowrap">Follow</span>
-                    </h4>
-                    <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors">
-                      Join our 200+ followers to see daily project updates!
-                    </p>
-                  </div>
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center mb-3">
+                  <InstagramIcon className="w-5 h-5 text-white" />
                 </div>
+                <p className="text-sm font-semibold text-white">Instagram</p>
               </a>
 
               <a
-                href="https://www.facebook.com/profile.php?id=61560688422009#"
+                href={siteConfig.social.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block glass-panel p-6 rounded-2xl border-electric-cyan/20 hover:border-electric-cyan/50 hover:bg-white/5 transition-all duration-300 group"
+                className="group flex flex-col items-center text-center p-5 glass-panel rounded-2xl border-electric-cyan/10 hover:border-electric-cyan/40 hover:bg-white/5 transition-all duration-300"
               >
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-[#1877F2] flex items-center justify-center flex-shrink-0">
-                    <FacebookIcon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h4 className="text-base font-bold text-white mb-1.5 flex items-center flex-wrap gap-2">
-                      <span className="truncate">KDT Tiling</span>
-                      <span className="text-[10px] bg-electric-cyan/20 text-electric-cyan px-2 py-0.5 rounded-full whitespace-nowrap">Like</span>
-                    </h4>
-                    <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors">
-                      Check reviews, project galleries, and connect with us!
-                    </p>
-                  </div>
+                <div className="w-10 h-10 rounded-full bg-[#1877F2] flex items-center justify-center mb-3">
+                  <FacebookIcon className="w-5 h-5 text-white" />
                 </div>
+                <p className="text-sm font-semibold text-white">Facebook</p>
               </a>
+
+              <a
+                href={siteConfig.social.googleBusiness}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col items-center text-center p-5 glass-panel rounded-2xl border-electric-cyan/10 hover:border-electric-cyan/40 hover:bg-white/5 transition-all duration-300"
+              >
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mb-3">
+                  <GoogleIcon className="w-5 h-5 text-black" />
+                </div>
+                <p className="text-sm font-semibold text-white">Google</p>
+              </a>
+            </div>
             </div>
           </motion.div>
 

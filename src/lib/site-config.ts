@@ -22,6 +22,7 @@ export const siteConfig = {
     instagram: "https://instagram.com/kdttilingswansea",
     instagramHandle: "@kdttilingswansea",
     facebook: "https://www.facebook.com/profile.php?id=61560688422009#",
+    googleBusiness: "https://www.google.com/maps/search/?api=1&query=KDT+Tiling+Swansea",
   },
 
   business: {
