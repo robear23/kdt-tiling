@@ -8,7 +8,7 @@ import { locations } from "@/lib/locations";
 
 const navLinks = [
   { name: "Services", href: "/#services" },
-  { name: "Gallery", href: "/#gallery" },
+  { name: "Portfolio", href: "/#portfolio" },
   { name: "Why Choose Us", href: "/#features" },
   { name: "Reviews", href: "/#reviews" },
 ];

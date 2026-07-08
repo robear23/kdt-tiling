@@ -85,7 +85,7 @@ export default function Hero() {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                href="#gallery"
+                href="#portfolio"
                 className="w-full sm:w-auto flex items-center justify-center px-8 py-4 rounded font-semibold text-white border border-white/20 hover:bg-white/5 transition-all duration-300"
               >
                 View Our Work

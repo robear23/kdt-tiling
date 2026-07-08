@@ -25,6 +25,27 @@ export default function Features() {
   return (
     <section id="features" className="py-20 bg-matte-black border-y border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl md:text-5xl font-serif font-bold text-white mb-6"
+          >
+            Why <span className="text-gradient-cyan">Choose Us</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-gray-400 font-sans text-lg"
+          >
+            We take pride in delivering professional, reliable, and premium quality workmanship
+            on every project, big or small.
+          </motion.p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10">
           {features.map((feature, index) => (
             <motion.div

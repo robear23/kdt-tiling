@@ -27,7 +27,7 @@ function buildLlmsTxt(): string {
     "## Key Pages",
     `- [Homepage](${siteConfig.url}/)`,
     `- [Get a Quote](${siteConfig.url}/#contact)`,
-    `- [Portfolio Gallery](${siteConfig.url}/#gallery)`,
+    `- [Portfolio Gallery](${siteConfig.url}/#portfolio)`,
   ];
   return lines.join("\n");
 }
