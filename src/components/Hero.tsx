@@ -2,12 +2,11 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, CheckCircle } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-32 pb-12 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center pt-40 pb-12 overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <div
@@ -23,25 +22,8 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex justify-start">
-        {/* Container for Logo (background) and Text (overlay) */}
+        {/* Container for Text Content */}
         <div className="relative w-full flex flex-col items-start justify-end min-h-[600px] lg:min-h-[750px] pb-3 lg:pb-6">
-          
-          {/* Logo (Absolute in background, positioned top-right) */}
-          <motion.div
-            initial={{ opacity: 0, x: 80 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="absolute top-0 right-0 w-[180px] sm:w-[250px] md:w-[320px] lg:w-[520px] xl:w-[580px] max-w-full sm:max-w-none h-auto pointer-events-none z-0 select-none"
-          >
-            <Image
-              src="/images/kdt-logo-transparent.png"
-              alt="KDT Tiling Logo"
-              width={1377}
-              height={842}
-              priority
-              className="w-full h-auto object-contain drop-shadow-[0_10px_20px_rgba(0,242,254,0.12)]"
-            />
-          </motion.div>
 
           {/* Text Content Container (Relative overlaying the logo) */}
           <div className="relative z-10 w-full max-w-3xl flex flex-col items-start text-left pr-0">

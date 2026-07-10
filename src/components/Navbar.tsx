@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { locations } from "@/lib/locations";
@@ -30,11 +31,18 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-24">
+        <div className="flex justify-between items-center h-32">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-2xl font-serif font-bold tracking-wider text-white">
-              KDT<span className="text-electric-cyan font-sans font-extrabold">TILING</span>
+            <Link href="/" className="block">
+              <Image
+                src="/images/kdt-logo-transparent.png"
+                alt="KDT Tiling Logo"
+                width={180}
+                height={110}
+                priority
+                className="h-24 w-auto object-contain"
+              />
             </Link>
           </div>
 
